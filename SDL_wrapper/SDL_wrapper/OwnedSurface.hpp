@@ -8,12 +8,12 @@ namespace sdl
 
 class OwnedSurface final : public Surface
 {
-    OwnedSurface(SDL_Surface *handle);
-
     friend class Surface;
 
   public:
-    ~OwnedSurface();
+    explicit OwnedSurface(SDL_Surface *handle);
+
+    ~OwnedSurface() override;
     OwnedSurface(const OwnedSurface &) = delete;
     OwnedSurface(OwnedSurface &&other) noexcept;
     OwnedSurface &operator=(const OwnedSurface &) = delete;

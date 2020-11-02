@@ -14,15 +14,18 @@ Surface::Surface(SDL_Surface *handle) : m_handle(handle)
                                      .Build()};
     }
 }
+
 OwnedSurface Surface::LoadBmp(const Context &context,
                               const std::string_view fileName)
 {
     return OwnedSurface(SDL_LoadBMP(fileName.data()));
 }
+
 SDL_Surface *Surface::Get() const noexcept
 {
     return m_handle;
 }
+
 void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
                    std::optional<SDL_Rect> destRect) const
 {
@@ -36,8 +39,8 @@ void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
     {
         d = &*destRect;
     }
-    std::cout << "m_handle: " << m_handle
-              << "\ndestination.Get(): " << destination.Get() << "\n";
+    std::cout << "Attempting to blit surface " << m_handle << " to surface "
+              << destination.Get() << "\n";
     if (SDL_BlitSurface(m_handle, s, destination.Get(), d) != 0)
     {
         throw std::runtime_error(Helpers::StringBuilder()

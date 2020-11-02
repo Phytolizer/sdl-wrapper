@@ -6,3 +6,4 @@
 #include <string_view>
 #include <Helpers/StringBuilder.hpp>
 #include <optional>
+#include <memory>
