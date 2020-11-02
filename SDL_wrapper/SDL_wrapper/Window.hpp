@@ -1,7 +1,7 @@
 #pragma once
 
-#include "pch.h"
 #include "VideoSubsystem.hpp"
+#include "pch.h"
 
 namespace sdl
 {
@@ -12,6 +12,7 @@ class Surface;
 class Window
 {
     SDL_Window *m_handle;
+
   public:
     Window(const VideoSubsystem &videoSubsystem, std::string_view title, int x,
            int y, int w, int h);
