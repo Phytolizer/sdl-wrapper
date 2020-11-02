@@ -9,8 +9,6 @@ OwnedSurface::~OwnedSurface()
 {
     if (m_handle != nullptr)
     {
-        std::cout << "Destroying an OwnedSurface with pointer " << m_handle
-                  << "\n";
         SDL_FreeSurface(m_handle);
     }
 }
