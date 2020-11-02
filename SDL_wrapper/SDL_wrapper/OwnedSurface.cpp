@@ -2,7 +2,7 @@
 
 namespace sdl
 {
-OwnedSurface::OwnedSurface(SDL_Surface *handle) : Surface(handle)
+OwnedSurface::OwnedSurface(SDL_Surface *handle) : m_handle(handle)
 {
 }
 OwnedSurface::~OwnedSurface()
@@ -13,7 +13,7 @@ OwnedSurface::~OwnedSurface()
     }
 }
 OwnedSurface::OwnedSurface(OwnedSurface &&other) noexcept
-    : Surface(other.m_handle)
+    : m_handle(other.m_handle)
 {
     other.m_handle = nullptr;
 }
@@ -29,5 +29,9 @@ OwnedSurface &OwnedSurface::operator=(OwnedSurface &&other) noexcept
         other.m_handle = nullptr;
     }
     return *this;
+}
+SDL_Surface *OwnedSurface::Get() const noexcept
+{
+    return m_handle;
 }
 } // namespace sdl

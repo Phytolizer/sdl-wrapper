@@ -3,3 +3,9 @@
 /.vscode
 /build
 
+/.idea/vcs.xml
+/.idea/SDL_wrapper.iml
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/.name
+/.idea/.gitignore

@@ -10,21 +10,19 @@ class OwnedSurface;
 
 class Surface
 {
-  protected:
-    SDL_Surface *m_handle;
-    explicit Surface(SDL_Surface *handle);
+  private:
+    std::unique_ptr<Surface> m_handle;
 
-    friend class Window;
+  protected:
+    Surface() = default;
 
   public:
-    // virtual because OwnedSurface subclasses this
+    Surface(std::unique_ptr<Surface> &&handle);
     virtual ~Surface() = default;
-    // FIXME rule of 0 applies here?
 
-    static OwnedSurface LoadBmp(const Context &context,
-                                std::string_view fileName);
+    static Surface LoadBmp(const Context &context, std::string_view fileName);
 
-    [[nodiscard]] SDL_Surface *Get() const noexcept;
+    [[nodiscard]] virtual SDL_Surface *Get() const noexcept;
     void Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
               std::optional<SDL_Rect> destRect) const;
 };

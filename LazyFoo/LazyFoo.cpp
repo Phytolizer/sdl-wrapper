@@ -9,31 +9,9 @@ enum class key_press
     right
 };
 
-std::unordered_map<key_press, sdl::Surface> LoadMedia(
-    const sdl::Context &context)
+sdl::Surface LoadMedia(const sdl::Context &context)
 {
-    auto out = std::unordered_map<key_press, sdl::Surface>{};
-
-    try
-    {
-        out.emplace(key_press::other,
-                    sdl::Surface::LoadBmp(context, "04_key_presses/press.bmp"));
-        out.emplace(key_press::up,
-                    sdl::Surface::LoadBmp(context, "04_key_presses/up.bmp"));
-        out.emplace(key_press::down,
-                    sdl::Surface::LoadBmp(context, "04_key_presses/down.bmp"));
-        out.emplace(key_press::left,
-                    sdl::Surface::LoadBmp(context, "04_key_presses/left.bmp"));
-        out.emplace(key_press::right,
-                    sdl::Surface::LoadBmp(context, "04_key_presses/right.bmp"));
-    }
-    catch (std::runtime_error &e)
-    {
-        std::cerr << "Failed loading required assets: " << e.what() << "\n";
-        throw;
-    }
-
-    return out;
+    return sdl::Surface::LoadBmp(context, "04_key_presses/press.bmp");
 }
 
 int main(int argc, char **argv)
@@ -79,15 +57,6 @@ int main(int argc, char **argv)
             }
         }
 
-        try
-        {
-            key_press_surfaces.at(current_surface).Blit({}, screen_surface, {});
-        }
-        catch (std::runtime_error &e)
-        {
-            std::cerr << e.what() << "\n";
-            throw;
-        }
         window.UpdateSurface();
     }
     return 0;

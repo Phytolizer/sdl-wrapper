@@ -1,6 +1,7 @@
 #include "Window.hpp"
 #include "Surface.hpp"
 #include "WindowBuilder.hpp"
+#include "RefSurface.hpp"
 
 namespace sdl
 {
@@ -60,7 +61,7 @@ WindowBuilder Window::Builder() noexcept
 }
 Surface Window::GetSurface() const
 {
-    return Surface(SDL_GetWindowSurface(m_handle));
+    return {std::make_unique<RefSurface>(SDL_GetWindowSurface(m_handle))};
 }
 void Window::UpdateSurface() const
 {

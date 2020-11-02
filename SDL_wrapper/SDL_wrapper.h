@@ -9,4 +9,5 @@
 #include "SDL_wrapper/WindowBuilder.hpp"
 #include "SDL_wrapper/Surface.hpp"
 #include "SDL_wrapper/OwnedSurface.hpp"
+#include "SDL_wrapper/RefSurface.hpp"
 
