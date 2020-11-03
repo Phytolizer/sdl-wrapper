@@ -5,7 +5,8 @@ cmake_minimum_required (VERSION 3.16)
 
 # Add source to this project's executable.
 file(GLOB_RECURSE SOURCES "*.cpp")
-add_library (SDL_wrapper STATIC ${SOURCES})
+file(GLOB_RECURSE HEADERS "*.hpp")
+add_library (SDL_wrapper STATIC ${SOURCES} ${HEADERS})
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS} Helpers)
 target_include_directories(${PROJECT_NAME} PRIVATE ${TOPDIR}/Helpers)
 target_precompile_headers(${PROJECT_NAME} PRIVATE "SDL_wrapper/pch.h")

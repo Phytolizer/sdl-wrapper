@@ -1,10 +1,10 @@
 #include "StringBuilder.hpp"
 
-Helpers::StringBuilder::StringBuilder() : OutputStream(m_ss), m_ss()
+Helpers::StringBuilder::StringBuilder() : IOutputStream(m_ss)
 {
 }
 
-std::string Helpers::StringBuilder::Build()
+std::string Helpers::StringBuilder::Build() const
 {
     return m_ss.str();
 }

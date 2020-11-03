@@ -25,5 +25,6 @@ class Window
     static WindowBuilder Builder() noexcept;
     [[nodiscard]] Surface GetSurface() const;
     void UpdateSurface() const;
+    [[nodiscard]] SDL_Window *Get() const noexcept;
 };
 } // namespace sdl

@@ -1,4 +1,5 @@
 #include "Surface.hpp"
+
 #include "OwnedSurface.hpp"
 
 namespace sdl
@@ -14,15 +15,19 @@ Surface::Surface(std::unique_ptr<Surface> &&handle)
                                      .Build()};
     }
 }
-Surface Surface::LoadBmp(const Context &context,
+
+Surface Surface::LoadBmp(const Context & /*context*/,
                          const std::string_view fileName)
 {
-    return {std::make_unique<OwnedSurface>(SDL_LoadBMP(fileName.data()))};
+    return Surface{
+        std::make_unique<OwnedSurface>(SDL_LoadBMP(fileName.data()))};
 }
+
 SDL_Surface *Surface::Get() const noexcept
 {
     return m_handle->Get();
 }
+
 void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
                    std::optional<SDL_Rect> destRect) const
 {

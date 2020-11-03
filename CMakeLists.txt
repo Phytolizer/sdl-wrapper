@@ -5,6 +5,8 @@ cmake_minimum_required (VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 20)
 set(TOPDIR ${CMAKE_CURRENT_SOURCE_DIR})
+message("Exporting compile commands")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
 project(Helpers)

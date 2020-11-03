@@ -1,6 +1,6 @@
 #include "VideoSubsystem.hpp"
 
-sdl::VideoSubsystem::VideoSubsystem(const Context &context)
+sdl::VideoSubsystem::VideoSubsystem(const Context & /*context*/)
 {
     if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0)
     {

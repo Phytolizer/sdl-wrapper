@@ -6,7 +6,7 @@ namespace sdl
 {
 class Context
 {
-    bool m_active;
+    bool m_active{true};
 
   public:
     Context();
@@ -15,5 +15,7 @@ class Context
     Context(Context &&other) noexcept;
     Context &operator=(const Context &) = delete;
     Context &operator=(Context &&other) noexcept;
+
+    void SetHint(std::string_view name, std::string_view value) const;
 };
 } // namespace sdl

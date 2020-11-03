@@ -17,8 +17,12 @@ class Surface
     Surface() = default;
 
   public:
-    Surface(std::unique_ptr<Surface> &&handle);
+    explicit Surface(std::unique_ptr<Surface> &&handle);
     virtual ~Surface() = default;
+    Surface(const Surface &) = delete;
+    Surface(Surface &&) = default;
+    Surface &operator=(const Surface &) = delete;
+    Surface &operator=(Surface &&) = default;
 
     static Surface LoadBmp(const Context &context, std::string_view fileName);
 

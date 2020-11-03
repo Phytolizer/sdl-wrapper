@@ -8,7 +8,7 @@ namespace sdl
 
 class WindowBuilder
 {
-    Uint32 m_flags;
+    Uint32 m_flags{0};
 
   public:
     WindowBuilder();
@@ -34,7 +34,7 @@ class WindowBuilder
     WindowBuilder &Tooltip() noexcept;
     WindowBuilder &PopupMenu() noexcept;
     Window Build(const VideoSubsystem &videoSubsystem, std::string_view title,
-                 int x, int y, int w, int h);
+                 int x, int y, int w, int h) const;
 };
 
 } // namespace sdl

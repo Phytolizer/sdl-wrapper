@@ -1,13 +1,12 @@
 #pragma once
 
-#include "pch.h"
 #include "Context.hpp"
 
 namespace sdl
 {
 class VideoSubsystem
 {
-    bool m_active;
+    bool m_active{true};
 
   public:
     explicit VideoSubsystem(const Context &context);
