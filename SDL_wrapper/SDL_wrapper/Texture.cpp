@@ -1,38 +1,15 @@
 #include "Texture.hpp"
 
-#include "Renderer.hpp"
-#include "Surface.hpp"
+#include "BlendMode.hpp"
 
-sdl::Texture::Texture(const Renderer &renderer, TextureAttributes &&attributes)
-    : m_handle(SDL_CreateTexture(renderer.Get(), attributes.format,
-                                 attributes.access, attributes.w, attributes.h))
+sdl::Texture::Texture(std::unique_ptr<Texture> &&handle) : m_texture(std::move(handle))
 {
-    if (!m_handle)
-    {
-        throw std::runtime_error{Helpers::StringBuilder()
-                                     .Add("SDL texture creation failed: ")
-                                     .Add(SDL_GetError())
-                                     .Build()};
-    }
-}
-
-sdl::Texture::Texture(const Renderer &renderer, const Surface &surface)
-    : m_handle(SDL_CreateTextureFromSurface(renderer.Get(), surface.Get()))
-{
-    if (!m_handle)
-    {
-        throw std::runtime_error{
-            Helpers::StringBuilder()
-                .Add("Creating SDL texture from surface failed: ")
-                .Add(SDL_GetError())
-                .Build()};
-    }
 }
 
 Uint8 sdl::Texture::GetAlphaMod() const
 {
     Uint8 alphaMod{};
-    if (SDL_GetTextureAlphaMod(m_handle.get(), &alphaMod) != 0)
+    if (SDL_GetTextureAlphaMod(m_texture->Get(), &alphaMod) != 0)
     {
         throw std::runtime_error{
             Helpers::StringBuilder()
@@ -46,7 +23,7 @@ Uint8 sdl::Texture::GetAlphaMod() const
 sdl::BlendMode sdl::Texture::GetBlendMode() const
 {
     SDL_BlendMode mode{};
-    if (SDL_GetTextureBlendMode(m_handle.get(), &mode) != 0)
+    if (SDL_GetTextureBlendMode(m_texture->Get(), &mode) != 0)
     {
         throw std::runtime_error{
             Helpers::StringBuilder()
@@ -60,7 +37,7 @@ sdl::BlendMode sdl::Texture::GetBlendMode() const
 SDL_Color sdl::Texture::GetColorMod() const
 {
     SDL_Color color{0, 0, 0, 0};
-    if (SDL_GetTextureColorMod(m_handle.get(), &color.r, &color.g, &color.b) !=
+    if (SDL_GetTextureColorMod(m_texture->Get(), &color.r, &color.g, &color.b) !=
         0)
     {
         throw std::runtime_error{
@@ -75,7 +52,7 @@ SDL_Color sdl::Texture::GetColorMod() const
 sdl::TextureAttributes sdl::Texture::Query() const
 {
     TextureAttributes attributes{};
-    if (SDL_QueryTexture(m_handle.get(), &attributes.format, &attributes.access,
+    if (SDL_QueryTexture(m_texture->Get(), &attributes.format, &attributes.access,
                          &attributes.w, &attributes.h) != 0)
     {
         throw std::runtime_error{
@@ -95,7 +72,7 @@ sdl::TextureAttributes sdl::Texture::Query() const
 // this logic also applies to the other setters
 void sdl::Texture::SetAlphaMod(const Uint8 alpha)
 {
-    if (SDL_SetTextureAlphaMod(m_handle.get(), alpha) != 0)
+    if (SDL_SetTextureAlphaMod(m_texture->Get(), alpha) != 0)
     {
         throw std::runtime_error{
             Helpers::StringBuilder()
@@ -105,7 +82,7 @@ void sdl::Texture::SetAlphaMod(const Uint8 alpha)
     }
 }
 
-SDL_Texture *sdl::Texture::Get() const noexcept
+SDL_Texture * sdl::Texture::Get() const noexcept
 {
-    return m_handle.get();
+    return m_texture->Get();
 }

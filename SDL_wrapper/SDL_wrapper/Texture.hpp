@@ -1,19 +1,11 @@
 #pragma once
-#include "BlendMode.hpp"
+
 #include "pch.h"
 
 namespace sdl
 {
 
-class Renderer;
-class Surface;
-
-constexpr auto TEXTURE_DELETER = [](SDL_Texture *texture) {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    }
-};
+enum class BlendMode;
 
 struct TextureAttributes
 {
@@ -25,11 +17,18 @@ struct TextureAttributes
 
 class Texture
 {
-    std::unique_ptr<SDL_Texture, decltype(TEXTURE_DELETER)> m_handle;
+    std::unique_ptr<Texture> m_texture;
+
+  protected:
+    Texture() = default;
 
   public:
-    Texture(const Renderer &renderer, TextureAttributes &&attributes);
-    Texture(const Renderer &renderer, const Surface &surface);
+    explicit Texture(std::unique_ptr<Texture> &&handle);
+    virtual ~Texture() = default;
+    Texture(const Texture &) = delete;
+    Texture(Texture &&) = default;
+    Texture &operator=(const Texture &) = delete;
+    Texture &operator=(Texture &&) = default;
 
     [[nodiscard]] Uint8 GetAlphaMod() const;
     [[nodiscard]] BlendMode GetBlendMode() const;
@@ -37,6 +36,7 @@ class Texture
     [[nodiscard]] TextureAttributes Query() const;
     // Wrapper for SDL_SetTextureAlphaMod
     void SetAlphaMod(Uint8 alpha);
-    [[nodiscard]] SDL_Texture *Get() const noexcept;
+    [[nodiscard]] virtual SDL_Texture *Get() const noexcept;
 };
+
 } // namespace sdl

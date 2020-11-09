@@ -5,9 +5,9 @@
 namespace sdl
 {
 Surface::Surface(std::unique_ptr<Surface> &&handle)
-    : m_handle(std::move(handle))
+    : m_surface(std::move(handle))
 {
-    if (m_handle->Get() == nullptr)
+    if (m_surface->Get() == nullptr)
     {
         throw std::runtime_error{Helpers::StringBuilder()
                                      .Add("SDL surface creation failed: ")
@@ -25,7 +25,7 @@ Surface Surface::LoadBmp(const Context & /*context*/,
 
 SDL_Surface *Surface::Get() const noexcept
 {
-    return m_handle->Get();
+    return m_surface->Get();
 }
 
 void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
@@ -41,9 +41,9 @@ void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
     {
         d = &*destRect;
     }
-    std::cout << "m_handle: " << m_handle
+    std::cout << "m_surface: " << m_surface
               << "\ndestination.Get(): " << destination.Get() << "\n";
-    if (SDL_BlitSurface(m_handle->Get(), s, destination.Get(), d) != 0)
+    if (SDL_BlitSurface(m_surface->Get(), s, destination.Get(), d) != 0)
     {
         throw std::runtime_error(Helpers::StringBuilder()
                                      .Add("Blitting surface failed: ")

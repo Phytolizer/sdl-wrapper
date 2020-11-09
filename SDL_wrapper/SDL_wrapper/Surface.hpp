@@ -10,8 +10,7 @@ class OwnedSurface;
 
 class Surface
 {
-  private:
-    std::unique_ptr<Surface> m_handle;
+    std::unique_ptr<Surface> m_surface;
 
   protected:
     Surface() = default;

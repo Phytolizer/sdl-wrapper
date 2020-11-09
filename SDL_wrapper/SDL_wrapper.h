@@ -10,7 +10,7 @@
 #include "SDL_wrapper/RefSurface.hpp"
 #include "SDL_wrapper/Renderer.hpp"
 #include "SDL_wrapper/Surface.hpp"
-#include "SDL_wrapper/Texture.hpp"
+#include "SDL_wrapper/OwnedTexture.hpp"
 #include "SDL_wrapper/VideoSubsystem.hpp"
 #include "SDL_wrapper/Window.hpp"
 #include "SDL_wrapper/WindowBuilder.hpp"

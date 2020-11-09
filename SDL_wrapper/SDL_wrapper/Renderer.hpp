@@ -6,10 +6,11 @@
 
 namespace sdl
 {
+class Texture;
+class RefTexture;
 
 class Surface;
 class Window;
-class Texture;
 
 constexpr auto RENDERER_DELETER = [](SDL_Renderer *handle) {
     if (handle != nullptr)
@@ -59,5 +60,21 @@ class Renderer
     [[nodiscard]] rect GetClipRect() const noexcept;
     [[nodiscard]] bool IsIntegerScale() const noexcept;
     [[nodiscard]] size GetLogicalSize() const noexcept;
+    [[nodiscard]] Scale GetScale() const noexcept;
+    [[nodiscard]] rect GetViewport() const noexcept;
+    [[nodiscard]] bool IsClipEnabled() const noexcept;
+    [[nodiscard]] SDL_BlendMode GetDrawBlendMode() const;
+    [[nodiscard]] SDL_Color GetDrawColor() const;
+    [[nodiscard]] SDL_RendererInfo GetInfo() const;
+    [[nodiscard]] size GetOutputSize() const;
+    [[nodiscard]] std::optional<Texture> GetTarget() const noexcept;
+    [[nodiscard]] bool TargetSupported() const noexcept;
+
+    void SetClipRect(const rect &r);
+    void SetIntegerScale(bool enable);
+    void SetLogicalSize(const size &sz);
+    void SetScale(const Scale &s);
+    void SetDrawBlendMode(SDL_BlendMode mode);
+    void SetTarget(const Texture &target);
 };
 } // namespace sdl
