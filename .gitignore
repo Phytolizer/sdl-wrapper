@@ -2,4 +2,14 @@
 /.vs
 /.vscode
 /build
-/cmake-build-*
+
+/.idea/vcs.xml
+/.idea/SDL_wrapper.iml
+/.idea/modules.xml
+/.idea/misc.xml
+/.idea/.name
+/.idea/.gitignore
+/LazyFoo/07_texture_loading_and_rendering/
+/cmake-build-debug
+*.png
+

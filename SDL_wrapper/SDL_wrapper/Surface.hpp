@@ -10,21 +10,22 @@ class OwnedSurface;
 
 class Surface
 {
+    std::unique_ptr<Surface> m_surface;
+
   protected:
-    SDL_Surface *m_handle;
-    explicit Surface(SDL_Surface *handle);
-    friend class Window;
+    Surface() = default;
 
   public:
-    // virtual because OwnedSurface subclasses this
+    explicit Surface(std::unique_ptr<Surface> &&handle);
     virtual ~Surface() = default;
-    Surface(const Surface &) = default;
+    Surface(const Surface &) = delete;
     Surface(Surface &&) = default;
-    Surface &operator=(const Surface &) = default;
+    Surface &operator=(const Surface &) = delete;
     Surface &operator=(Surface &&) = default;
-    static OwnedSurface LoadBmp(const Context &context,
-                                std::string_view fileName);
-    [[nodiscard]] SDL_Surface *Get() const noexcept;
+
+    static Surface LoadBmp(const Context &context, std::string_view fileName);
+
+    [[nodiscard]] virtual SDL_Surface *Get() const noexcept;
     void Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
               std::optional<SDL_Rect> destRect) const;
 };
