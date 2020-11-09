@@ -3,7 +3,7 @@
 #include "Renderer.hpp"
 #include "Surface.hpp"
 
-sdl::Texture::Texture(const Renderer &renderer, texture_attributes &&attributes)
+sdl::Texture::Texture(const Renderer &renderer, TextureAttributes &&attributes)
     : m_handle(SDL_CreateTexture(renderer.Get(), attributes.format,
                                  attributes.access, attributes.w, attributes.h))
 {
@@ -72,9 +72,9 @@ SDL_Color sdl::Texture::GetColorMod() const
     return color;
 }
 
-sdl::texture_attributes sdl::Texture::Query() const
+sdl::TextureAttributes sdl::Texture::Query() const
 {
-    texture_attributes attributes{};
+    TextureAttributes attributes{};
     if (SDL_QueryTexture(m_handle.get(), &attributes.format, &attributes.access,
                          &attributes.w, &attributes.h) != 0)
     {

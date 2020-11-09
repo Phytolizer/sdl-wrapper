@@ -1,4 +1,4 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
+﻿# CMakeLists.txt : Top-level CMake project file, do global configuration
 # and include sub-projects here.
 #
 cmake_minimum_required (VERSION 3.16)
@@ -8,11 +8,7 @@ set(TOPDIR ${CMAKE_CURRENT_SOURCE_DIR})
 message("Exporting compile commands")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
 project(Helpers)
-
-include("build/conanbuildinfo.cmake")
-conan_basic_setup()
 
 add_subdirectory("Helpers")
 

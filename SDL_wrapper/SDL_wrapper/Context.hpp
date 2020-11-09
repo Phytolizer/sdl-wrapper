@@ -4,6 +4,9 @@
 
 namespace sdl
 {
+
+class VideoSubsystem;
+
 class Context
 {
     bool m_active{true};
@@ -17,5 +20,9 @@ class Context
     Context &operator=(Context &&other) noexcept;
 
     void SetHint(std::string_view name, std::string_view value) const;
+
+    [[nodiscard]] VideoSubsystem Video() const;
+    /// Alias for SDL_PollEvent
+    [[nodiscard]] std::optional<SDL_Event> PollEvent() const noexcept;
 };
 } // namespace sdl

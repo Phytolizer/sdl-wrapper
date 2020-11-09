@@ -9,9 +9,15 @@ namespace sdl
 class WindowBuilder
 {
     Uint32 m_flags{0};
+    std::string_view m_title;
+    int m_x;
+    int m_y;
+    int m_w;
+    int m_h;
+    WindowBuilder(std::string_view title, int x, int y, int w, int h);
+    friend class VideoSubsystem;
 
   public:
-    WindowBuilder();
     WindowBuilder &Fullscreen() noexcept;
     WindowBuilder &FullscreenDesktop() noexcept;
     WindowBuilder &OpenGl() noexcept;
@@ -33,8 +39,7 @@ class WindowBuilder
     WindowBuilder &Utility() noexcept;
     WindowBuilder &Tooltip() noexcept;
     WindowBuilder &PopupMenu() noexcept;
-    Window Build(const VideoSubsystem &videoSubsystem, std::string_view title,
-                 int x, int y, int w, int h) const;
+    Window Build() const;
 };
 
 } // namespace sdl

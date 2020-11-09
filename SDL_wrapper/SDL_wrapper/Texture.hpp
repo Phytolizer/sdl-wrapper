@@ -15,7 +15,7 @@ constexpr auto TEXTURE_DELETER = [](SDL_Texture *texture) {
     }
 };
 
-struct texture_attributes
+struct TextureAttributes
 {
     Uint32 format;
     int access;
@@ -28,13 +28,13 @@ class Texture
     std::unique_ptr<SDL_Texture, decltype(TEXTURE_DELETER)> m_handle;
 
   public:
-    Texture(const Renderer &renderer, texture_attributes &&attributes);
+    Texture(const Renderer &renderer, TextureAttributes &&attributes);
     Texture(const Renderer &renderer, const Surface &surface);
 
     [[nodiscard]] Uint8 GetAlphaMod() const;
     [[nodiscard]] BlendMode GetBlendMode() const;
     [[nodiscard]] SDL_Color GetColorMod() const;
-    [[nodiscard]] texture_attributes Query() const;
+    [[nodiscard]] TextureAttributes Query() const;
     // Wrapper for SDL_SetTextureAlphaMod
     void SetAlphaMod(Uint8 alpha);
     [[nodiscard]] SDL_Texture *Get() const noexcept;

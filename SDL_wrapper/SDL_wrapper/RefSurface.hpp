@@ -13,7 +13,7 @@ class RefSurface final : public Surface
 
   public:
     explicit RefSurface(SDL_Surface *handle);
-    struct SDL_Surface *Get() const noexcept override;
+    [[nodiscard]] SDL_Surface *Get() const noexcept override;
 };
 
 } // namespace sdl

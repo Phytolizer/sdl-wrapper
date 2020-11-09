@@ -14,4 +14,12 @@ class StringBuilder : public IOutputStream<StringBuilder>
 
     [[nodiscard]] std::string Build() const;
 };
+
+template <output_streamable T, output_streamable... Args>
+std::string BuildString(T first, Args... rest)
+{
+    StringBuilder builder;
+    builder.Add(first);
+
+}
 } // namespace Helpers

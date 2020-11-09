@@ -2,7 +2,9 @@
 
 namespace sdl
 {
-WindowBuilder::WindowBuilder()
+WindowBuilder::WindowBuilder(const std::string_view title, const int x,
+                             const int y, const int w, const int h)
+    : m_title(title), m_x(x), m_y(y), m_w(w), m_h(h)
 {
 }
 
@@ -132,10 +134,8 @@ WindowBuilder &WindowBuilder::PopupMenu() noexcept
     return *this;
 }
 
-Window WindowBuilder::Build(const VideoSubsystem &videoSubsystem,
-                            const std::string_view title, const int x,
-                            const int y, const int w, const int h) const
+Window WindowBuilder::Build() const
 {
-    return Window(videoSubsystem, title, x, y, w, h, m_flags);
+    return Window(m_title, m_x, m_y, m_w, m_h, m_flags);
 }
 } // namespace sdl

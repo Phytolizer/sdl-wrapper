@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Primitives.hpp"
+#include "Rect.hpp"
 #include "pch.h"
 
 namespace sdl
@@ -34,5 +37,27 @@ class Renderer
     void Clear();
     // Push the renderer's contents to the screen.
     void Present() noexcept;
+
+    void DrawLine(int x1, int y1, int x2, int y2);
+    void DrawLine(const point &p1, const point &p2);
+
+    void DrawLines(const std::vector<point> &vertices);
+
+    void DrawPoint(int x, int y);
+    void DrawPoint(const point &p);
+
+    void DrawPoints(const std::vector<point> &points);
+
+    void DrawRect(const rect &r);
+    void DrawRects(const std::vector<rect> &rects);
+
+    void FillRect(const rect &r);
+    void FillRects(const std::vector<rect> &rects);
+
+    void SetViewport(const rect &vp);
+
+    [[nodiscard]] rect GetClipRect() const noexcept;
+    [[nodiscard]] bool IsIntegerScale() const noexcept;
+    [[nodiscard]] size GetLogicalSize() const noexcept;
 };
 } // namespace sdl

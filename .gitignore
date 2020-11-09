@@ -11,3 +11,4 @@
 /.idea/.gitignore
 /LazyFoo/07_texture_loading_and_rendering/
 /cmake-build-debug
+*.png

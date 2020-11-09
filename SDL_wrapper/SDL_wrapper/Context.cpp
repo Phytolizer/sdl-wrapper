@@ -1,4 +1,5 @@
 #include "Context.hpp"
+#include "VideoSubsystem.hpp"
 
 sdl::Context::Context()
 {
@@ -33,7 +34,10 @@ sdl::Context &sdl::Context::operator=(sdl::Context &&other) noexcept
     }
     return *this;
 }
-void sdl::Context::SetHint(std::string_view name, std::string_view value) const
+
+// ReSharper disable once CppMemberFunctionMayBeStatic
+void sdl::Context::SetHint(const std::string_view name,
+                           const std::string_view value) const
 {
     if (SDL_SetHint(name.data(), value.data()) == SDL_FALSE)
     {
@@ -44,4 +48,20 @@ void sdl::Context::SetHint(std::string_view name, std::string_view value) const
                                      .Add(SDL_GetError())
                                      .Build()};
     }
+}
+
+sdl::VideoSubsystem sdl::Context::Video() const
+{
+    return VideoSubsystem(*this);
+}
+
+// ReSharper disable once CppMemberFunctionMayBeStatic
+std::optional<SDL_Event> sdl::Context::PollEvent() const noexcept
+{
+    SDL_Event e;
+    if (SDL_PollEvent(&e) != 0)
+    {
+        return {e};
+    }
+    return {};
 }

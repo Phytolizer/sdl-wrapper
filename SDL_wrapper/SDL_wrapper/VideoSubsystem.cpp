@@ -1,4 +1,5 @@
 #include "VideoSubsystem.hpp"
+#include "WindowBuilder.hpp"
 
 sdl::VideoSubsystem::VideoSubsystem(const Context & /*context*/)
 {
@@ -34,4 +35,10 @@ sdl::VideoSubsystem &sdl::VideoSubsystem::operator=(
         other.m_active = false;
     }
     return *this;
+}
+
+sdl::WindowBuilder sdl::VideoSubsystem::CreateWindow(std::string_view title,
+    int x, int y, int w, int h) const
+{
+    return WindowBuilder(title, x, y, w, h);
 }
