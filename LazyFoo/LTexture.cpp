@@ -28,3 +28,13 @@ void LTexture::SetColor(const SDL_Color &c)
 {
     m_texture.SetColorMod(c);
 }
+
+void LTexture::SetAlphaMod(const Uint8 mod)
+{
+    m_texture.SetAlphaMod(mod);
+}
+
+void LTexture::SetBlendMode(const sdl::BlendMode mode)
+{
+    m_texture.SetBlendMode(mode);
+}

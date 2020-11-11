@@ -20,8 +20,12 @@ int main(int /*argc*/, char ** /*argv*/)
     renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
 
     const auto imageContext = sdl::Image::Context(sdl::Image::InitFlag::png);
-    auto modulatedTexture = LTexture{renderer, imageContext.Load("colors.png")};
-    auto c = SDL_Color{0xFF, 0xFF, 0xFF};
+    auto modulatedTexture =
+        LTexture{renderer, imageContext.Load("fadeout.png")};
+    modulatedTexture.SetBlendMode(sdl::BlendMode::blend);
+    auto backgroundTexture =
+        LTexture{renderer, imageContext.Load("fadein.png")};
+    Uint8 a = 255;
 
     auto run = true;
     while (run)
@@ -37,23 +41,25 @@ int main(int /*argc*/, char ** /*argv*/)
             {
                 switch (e->key.keysym.sym)
                 {
-                case SDLK_q:
-                    c.r += 32;
-                    break;
                 case SDLK_w:
-                    c.g += 32;
-                    break;
-                case SDLK_e:
-                    c.b += 32;
-                    break;
-                case SDLK_a:
-                    c.r -= 32;
+                    if (a + 32 > 255)
+                    {
+                        a = 255;
+                    }
+                    else
+                    {
+                        a += 32;
+                    }
                     break;
                 case SDLK_s:
-                    c.g -= 32;
-                    break;
-                case SDLK_d:
-                    c.b -= 32;
+                    if (a - 32 < 0)
+                    {
+                        a = 0;
+                    }
+                    else
+                    {
+                        a -= 32;
+                    }
                     break;
                 }
             }
@@ -62,7 +68,9 @@ int main(int /*argc*/, char ** /*argv*/)
         renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
         renderer.Clear();
 
-        modulatedTexture.SetColor(c);
+        backgroundTexture.RenderTo(renderer, {0, 0}, {});
+
+        modulatedTexture.SetAlphaMod(a);
         modulatedTexture.RenderTo(renderer, {0, 0}, {});
 
         renderer.Present();
