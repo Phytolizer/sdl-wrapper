@@ -1,6 +1,7 @@
 #include "Context.hpp"
 
 #include "../RefSurface.hpp"
+#include "../SurfaceBuilder.hpp"
 #include "Flags.hpp"
 
 namespace sdl::Image
@@ -52,5 +53,11 @@ Surface Context::Load(const std::string_view fileName) const
                                      .Build()};
     }
     return Surface{std::make_unique<RefSurface>(ptr)};
+}
+
+SurfaceBuilder Context::LoadBuilder(const std::string_view fileName) const
+{
+    auto surf = Load(fileName);
+    return SurfaceBuilder{std::make_unique<Surface>(std::move(surf))};
 }
 } // namespace sdl::Image

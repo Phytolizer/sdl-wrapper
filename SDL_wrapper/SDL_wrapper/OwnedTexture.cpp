@@ -3,9 +3,11 @@
 #include "Renderer.hpp"
 #include "Surface.hpp"
 
-sdl::OwnedTexture::OwnedTexture(const Renderer &renderer, TextureAttributes &&attributes)
+sdl::OwnedTexture::OwnedTexture(const Renderer &renderer,
+                                TextureAttributes &&attributes)
     : m_handle(SDL_CreateTexture(renderer.Get(), attributes.format,
-                                 attributes.access, attributes.w, attributes.h))
+                                 attributes.access, attributes.w, attributes.h),
+               SDL_DestroyTexture)
 {
     if (!m_handle)
     {
@@ -16,8 +18,10 @@ sdl::OwnedTexture::OwnedTexture(const Renderer &renderer, TextureAttributes &&at
     }
 }
 
-sdl::OwnedTexture::OwnedTexture(const Renderer &renderer, const Surface &surface)
-    : m_handle(SDL_CreateTextureFromSurface(renderer.Get(), surface.Get()))
+sdl::OwnedTexture::OwnedTexture(const Renderer &renderer,
+                                const Surface &surface)
+    : m_handle(SDL_CreateTextureFromSurface(renderer.Get(), surface.Get()),
+               SDL_DestroyTexture)
 {
     if (!m_handle)
     {

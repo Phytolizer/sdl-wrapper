@@ -10,7 +10,8 @@ namespace sdl
 
 Renderer::Renderer(const sdl::Window &window, const int index,
                    const Uint32 flags)
-    : m_handle(SDL_CreateRenderer(window.Get(), index, flags))
+    : m_handle(SDL_CreateRenderer(window.Get(), index, flags),
+               SDL_DestroyRenderer)
 {
     if (!m_handle)
     {
@@ -383,7 +384,7 @@ void Renderer::SetTarget(const Texture &target)
 }
 
 Renderer::Renderer(const Surface &surface)
-    : m_handle(SDL_CreateSoftwareRenderer(surface.Get()))
+    : m_handle(SDL_CreateSoftwareRenderer(surface.Get()), SDL_DestroyRenderer)
 {
     if (!m_handle)
     {

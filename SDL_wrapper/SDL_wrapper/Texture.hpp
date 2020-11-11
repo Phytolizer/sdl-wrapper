@@ -6,6 +6,8 @@ namespace sdl
 {
 
 enum class BlendMode;
+class Renderer;
+class Surface;
 
 struct TextureAttributes
 {
@@ -18,12 +20,14 @@ struct TextureAttributes
 class Texture
 {
     std::unique_ptr<Texture> m_texture;
+    std::optional<TextureAttributes> m_cachedQuery;
 
   protected:
     Texture() = default;
 
   public:
     explicit Texture(std::unique_ptr<Texture> &&handle);
+    explicit Texture(const Renderer &renderer, const Surface &surface);
     virtual ~Texture() = default;
     Texture(const Texture &) = delete;
     Texture(Texture &&) = default;
@@ -33,9 +37,11 @@ class Texture
     [[nodiscard]] Uint8 GetAlphaMod() const;
     [[nodiscard]] BlendMode GetBlendMode() const;
     [[nodiscard]] SDL_Color GetColorMod() const;
-    [[nodiscard]] TextureAttributes Query() const;
+    // non-const due to implementation details
+    [[nodiscard]] TextureAttributes Query();
     // Wrapper for SDL_SetTextureAlphaMod
     void SetAlphaMod(Uint8 alpha);
+    void SetColorMod(const SDL_Color &mod);
     [[nodiscard]] virtual SDL_Texture *Get() const noexcept;
 };
 

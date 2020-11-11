@@ -4,8 +4,8 @@
 cmake_minimum_required (VERSION 3.16)
 
 # Add source to this project's executable.
-file(GLOB_RECURSE SOURCES "*.cpp")
-file(GLOB_RECURSE HEADERS "*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cpp")
+file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "*.hpp")
 add_library (SDL_wrapper STATIC ${SOURCES} ${HEADERS})
 target_link_libraries(${PROJECT_NAME} PUBLIC Helpers SDL2 SDL2main SDL2_image)
 target_link_directories(${PROJECT_NAME} PUBLIC

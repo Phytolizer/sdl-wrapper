@@ -26,7 +26,10 @@ class Surface
     static Surface LoadBmp(const Context &context, std::string_view fileName);
 
     [[nodiscard]] virtual SDL_Surface *Get() const noexcept;
+    [[nodiscard]] SDL_PixelFormat *Format() const;
     void Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
               std::optional<SDL_Rect> destRect) const;
+
+    void SetColorKey(std::optional<SDL_Color> key);
 };
 } // namespace sdl

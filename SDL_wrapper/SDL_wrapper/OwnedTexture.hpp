@@ -1,7 +1,7 @@
 #pragma once
 #include "BlendMode.hpp"
-#include "pch.h"
 #include "Texture.hpp"
+#include "pch.h"
 
 namespace sdl
 {
@@ -9,16 +9,9 @@ namespace sdl
 class Renderer;
 class Surface;
 
-constexpr auto TEXTURE_DELETER = [](SDL_Texture *texture) {
-    if (texture != nullptr)
-    {
-        SDL_DestroyTexture(texture);
-    }
-};
-
 class OwnedTexture final : public Texture
 {
-    std::unique_ptr<SDL_Texture, decltype(TEXTURE_DELETER)> m_handle;
+    std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> m_handle;
 
   public:
     OwnedTexture(const Renderer &renderer, TextureAttributes &&attributes);

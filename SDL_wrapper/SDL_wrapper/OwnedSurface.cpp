@@ -3,7 +3,8 @@
 namespace sdl
 {
 
-OwnedSurface::OwnedSurface(SDL_Surface *handle) : m_handle(handle)
+OwnedSurface::OwnedSurface(SDL_Surface *handle)
+    : m_handle(handle, SDL_FreeSurface)
 {
 }
 

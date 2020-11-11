@@ -1,8 +1,13 @@
 #pragma once
 
+#include "../Surface.hpp"
 #include "Flags.hpp"
 #include "pch.h"
-#include "../Surface.hpp"
+
+namespace sdl
+{
+class SurfaceBuilder;
+}
 
 namespace sdl::Image
 {
@@ -20,6 +25,7 @@ class Context
     Context &operator=(const Context &) = delete;
     Context &operator=(Context &&other) noexcept;
     [[nodiscard]] Surface Load(std::string_view fileName) const;
+    [[nodiscard]] SurfaceBuilder LoadBuilder(std::string_view fileName) const;
 };
 
 } // namespace sdl::Image

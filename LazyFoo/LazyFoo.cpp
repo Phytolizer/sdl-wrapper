@@ -1,6 +1,6 @@
+#include "LTexture.hpp"
 #include "pch.h"
 #include <SDL2/SDL_events.h>
-
 
 constexpr auto SCREEN_WIDTH = 640;
 constexpr auto SCREEN_HEIGHT = 480;
@@ -20,6 +20,8 @@ int main(int /*argc*/, char ** /*argv*/)
     renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
 
     const auto imageContext = sdl::Image::Context(sdl::Image::InitFlag::png);
+    auto modulatedTexture = LTexture{renderer, imageContext.Load("colors.png")};
+    auto c = SDL_Color{0xFF, 0xFF, 0xFF};
 
     auto run = true;
     while (run)
@@ -31,24 +33,38 @@ int main(int /*argc*/, char ** /*argv*/)
             {
                 run = false;
             }
+            else if (e->type == SDL_KEYDOWN)
+            {
+                switch (e->key.keysym.sym)
+                {
+                case SDLK_q:
+                    c.r += 32;
+                    break;
+                case SDLK_w:
+                    c.g += 32;
+                    break;
+                case SDLK_e:
+                    c.b += 32;
+                    break;
+                case SDLK_a:
+                    c.r -= 32;
+                    break;
+                case SDLK_s:
+                    c.g -= 32;
+                    break;
+                case SDLK_d:
+                    c.b -= 32;
+                    break;
+                }
+            }
         }
 
         renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
         renderer.Clear();
-        renderer.SetDrawColor({0xFF, 0x00, 0x00, 0xFF});
-        renderer.FillRect({SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4,
-                           SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2});
-        renderer.SetDrawColor({0x00, 0xFF, 0x00, 0xFF});
-        renderer.DrawRect({SCREEN_WIDTH / 6, SCREEN_HEIGHT / 6,
-                           SCREEN_WIDTH * 2 / 3, SCREEN_HEIGHT * 2 / 3});
-        renderer.SetDrawColor({0x00, 0x00, 0xFF, 0xFF});
-        renderer.DrawLine(0, SCREEN_HEIGHT / 2, SCREEN_WIDTH,
-                          SCREEN_HEIGHT / 2);
-        renderer.SetDrawColor({0xFF, 0xFF, 0x00, 0xFF});
-        for (auto i = 0; i < SCREEN_HEIGHT; i += 4)
-        {
-            renderer.DrawPoint({SCREEN_WIDTH / 2, i});
-        }
+
+        modulatedTexture.SetColor(c);
+        modulatedTexture.RenderTo(renderer, {0, 0}, {});
+
         renderer.Present();
     }
     return 0;

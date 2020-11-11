@@ -28,6 +28,11 @@ SDL_Surface *Surface::Get() const noexcept
     return m_surface->Get();
 }
 
+SDL_PixelFormat *Surface::Format() const
+{
+    return Get()->format;
+}
+
 void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
                    std::optional<SDL_Rect> destRect) const
 {
@@ -49,6 +54,29 @@ void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
                                      .Add("Blitting surface failed: ")
                                      .Add(SDL_GetError())
                                      .Build());
+    }
+}
+
+void Surface::SetColorKey(std::optional<SDL_Color> key)
+{
+    int code;
+    if (key.has_value())
+    {
+        code = SDL_SetColorKey(
+            m_surface->Get(), SDL_TRUE,
+            SDL_MapRGB(m_surface->Format(), key->r, key->g, key->b));
+    }
+    else
+    {
+        code = SDL_SetColorKey(m_surface->Get(), SDL_FALSE, 0);
+    }
+
+    if (code != 0)
+    {
+        throw std::runtime_error{Helpers::StringBuilder{}
+                                     .Add("Setting surface color key failed: ")
+                                     .Add(SDL_GetError())
+                                     .Build()};
     }
 }
 

@@ -2,6 +2,8 @@
 /.vs
 /.vscode
 /build
+/.ccls-cache
+/cmake-build-release
 
 /.idea/vcs.xml
 /.idea/SDL_wrapper.iml

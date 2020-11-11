@@ -12,16 +12,9 @@ class RefTexture;
 class Surface;
 class Window;
 
-constexpr auto RENDERER_DELETER = [](SDL_Renderer *handle) {
-    if (handle != nullptr)
-    {
-        SDL_DestroyRenderer(handle);
-    }
-};
-
 class Renderer
 {
-    std::unique_ptr<SDL_Renderer, decltype(RENDERER_DELETER)> m_handle;
+    std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> m_handle;
 
   public:
     Renderer(const sdl::Window &window, int index, Uint32 flags);
