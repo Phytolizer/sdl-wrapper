@@ -41,6 +41,7 @@ class Texture
     [[nodiscard]] TextureAttributes Query();
     // Wrapper for SDL_SetTextureAlphaMod
     void SetAlphaMod(Uint8 alpha);
+    void SetBlendMode(BlendMode mode);
     void SetColorMod(const SDL_Color &mod);
     [[nodiscard]] virtual SDL_Texture *Get() const noexcept;
 };

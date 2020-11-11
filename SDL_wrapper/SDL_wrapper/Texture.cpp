@@ -41,7 +41,7 @@ sdl::BlendMode sdl::Texture::GetBlendMode() const
                 .Add(SDL_GetError())
                 .Build()};
     }
-    return BlendModeFromSdl(mode);
+    return static_cast<sdl::BlendMode>(mode);
 }
 
 SDL_Color sdl::Texture::GetColorMod() const
@@ -94,6 +94,16 @@ void sdl::Texture::SetAlphaMod(const Uint8 alpha)
                 .Add("Setting SDL texture alpha mod failed: ")
                 .Add(SDL_GetError())
                 .Build()};
+    }
+}
+
+void sdl::Texture::SetBlendMode(const sdl::BlendMode mode)
+{
+    if (SDL_SetTextureBlendMode(m_texture->Get(),
+                                static_cast<SDL_BlendMode>(mode)) != 0)
+    {
+        throw std::runtime_error{Helpers::BuildString(
+            "Setting SDL texture blend mode failed: ", SDL_GetError())};
     }
 }
 

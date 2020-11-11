@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "SDL_wrapper/BlendMode.hpp"
 #include "SDL_wrapper/Context.hpp"
 #include "SDL_wrapper/Image/Context.hpp"
 #include "SDL_wrapper/Image/Flags.hpp"
