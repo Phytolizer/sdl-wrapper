@@ -19,7 +19,8 @@ int main(int /*argc*/, char ** /*argv*/)
     auto renderer = sdl::Renderer(window, -1, SDL_RENDERER_ACCELERATED);
     renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
 
-    const auto imageContext = sdl::Image::Context(sdl::Image::InitFlag::png);
+    const auto imageContext = sdl::Image::Context(sdl::Image::InitFlag::png |
+                                                  sdl::Image::InitFlag::jpg);
     auto modulatedTexture =
         LTexture{renderer, imageContext.Load("fadeout.png")};
     modulatedTexture.SetBlendMode(sdl::BlendMode::blend);

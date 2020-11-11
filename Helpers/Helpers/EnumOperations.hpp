@@ -8,7 +8,7 @@ template <typename E> struct EnableBitmaskOperations
 };
 
 template <typename E>
-requires(EnableBitmaskOperations<E>::enable) E operator|(E lhs, E rhs)
+requires(EnableBitmaskOperations<E>::enable) constexpr E operator|(E lhs, E rhs)
 {
     using underlying_type = typename std::underlying_type<E>::type;
     return static_cast<E>(static_cast<underlying_type>(lhs) |
