@@ -22,8 +22,12 @@ class Renderer
 
     [[nodiscard]] SDL_Renderer *Get() const noexcept;
 
-    void Copy(const Texture &texture, std::optional<SDL_Rect> &&srcRect,
-              std::optional<SDL_Rect> &&destRect) const;
+    void Copy(const Texture &texture, std::optional<rect> &&srcRect,
+              std::optional<rect> &&destRect) const;
+
+    void CopyEx(const Texture &texture, std::optional<rect> &&srcRect,
+                std::optional<rect> &&destRect, double angle,
+                std::optional<point> &&center, SDL_RendererFlip flip);
     // Set the color for future draw operations.
     void SetDrawColor(const SDL_Color &color);
     // Clear the renderer, filling its contents

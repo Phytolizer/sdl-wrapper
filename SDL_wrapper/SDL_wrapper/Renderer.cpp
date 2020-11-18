@@ -27,8 +27,8 @@ SDL_Renderer *Renderer::Get() const noexcept
     return m_handle.get();
 }
 
-void Renderer::Copy(const Texture &texture, std::optional<SDL_Rect> &&srcRect,
-                    std::optional<SDL_Rect> &&destRect) const
+void Renderer::Copy(const Texture &texture, std::optional<rect> &&srcRect,
+                    std::optional<rect> &&destRect) const
 {
     SDL_Rect *s = nullptr;
     if (srcRect.has_value())
@@ -47,6 +47,32 @@ void Renderer::Copy(const Texture &texture, std::optional<SDL_Rect> &&srcRect,
                 .Add("Copying texture to renderer failed: ")
                 .Add(SDL_GetError())
                 .Build()};
+    }
+}
+void Renderer::CopyEx(const Texture &texture, std::optional<rect> &&srcRect,
+                      std::optional<rect> &&destRect, double angle,
+                      std::optional<point> &&center, SDL_RendererFlip flip)
+{
+    rect *s = nullptr;
+    if (srcRect.has_value())
+    {
+        s = &*srcRect;
+    }
+    rect *d = nullptr;
+    if (destRect.has_value())
+    {
+        d = &*srcRect;
+    }
+    point *c = nullptr;
+    if (center.has_value())
+    {
+        c = &*center;
+    }
+    if (SDL_RenderCopyEx(m_handle.get(), texture.Get(), s, d, angle, c, flip) !=
+        0)
+    {
+        throw std::runtime_error{Helpers::BuildString(
+            "Copying texture to renderer failed: ", SDL_GetError())};
     }
 }
 
