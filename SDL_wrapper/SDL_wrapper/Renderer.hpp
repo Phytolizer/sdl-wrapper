@@ -2,6 +2,7 @@
 
 #include "Primitives.hpp"
 #include "Rect.hpp"
+#include "SDL_wrapper/Gfx/Renderer.hpp"
 #include "pch.h"
 
 namespace sdl
@@ -66,6 +67,7 @@ class Renderer
     [[nodiscard]] size GetOutputSize() const;
     [[nodiscard]] std::optional<Texture> GetTarget() const noexcept;
     [[nodiscard]] bool TargetSupported() const noexcept;
+    [[nodiscard]] Gfx::Renderer AsGfxRenderer() const noexcept;
 
     void SetClipRect(const rect &r);
     void SetIntegerScale(bool enable);

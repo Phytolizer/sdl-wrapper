@@ -435,4 +435,9 @@ void Renderer::SetDrawColor(const SDL_Color &color)
     }
 }
 
+Gfx::Renderer Renderer::AsGfxRenderer() const noexcept
+{
+    return Gfx::Renderer(m_handle.get());
+}
+
 } // namespace sdl

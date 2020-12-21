@@ -21,11 +21,6 @@ int main(int /*argc*/, char ** /*argv*/)
 
     const auto imageContext = sdl::Image::Context(sdl::Image::InitFlag::png |
                                                   sdl::Image::InitFlag::jpg);
-    auto modulatedTexture =
-        LTexture{renderer, imageContext.Load("fadeout.png")};
-    modulatedTexture.SetBlendMode(sdl::BlendMode::blend);
-    auto backgroundTexture =
-        LTexture{renderer, imageContext.Load("fadein.png")};
     Uint8 a = 255;
 
     auto run = true;
@@ -69,10 +64,8 @@ int main(int /*argc*/, char ** /*argv*/)
         renderer.SetDrawColor({0xFF, 0xFF, 0xFF, 0xFF});
         renderer.Clear();
 
-        backgroundTexture.RenderTo(renderer, {0, 0}, {});
-
-        modulatedTexture.SetAlphaMod(a);
-        modulatedTexture.RenderTo(renderer, {0, 0}, {});
+        renderer.AsGfxRenderer().FilledPolygon({0, 100, 200}, {100, 200, 500},
+                                               {0, 0, 0, 255});
 
         renderer.Present();
     }
