@@ -46,8 +46,6 @@ void Surface::Blit(std::optional<SDL_Rect> srcRect, const Surface &destination,
     {
         d = &*destRect;
     }
-    std::cout << "m_surface: " << m_surface
-              << "\ndestination.Get(): " << destination.Get() << "\n";
     if (SDL_BlitSurface(m_surface->Get(), s, destination.Get(), d) != 0)
     {
         throw std::runtime_error(Helpers::StringBuilder()
